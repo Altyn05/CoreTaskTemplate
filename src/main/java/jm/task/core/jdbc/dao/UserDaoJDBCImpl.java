@@ -21,10 +21,9 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR (45), lastname VARCHAR (45), age INT )");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR (45), lastname VARCHAR (45), age TINYINT )");
             connection.commit();
         } catch (SQLException e) {
             try {
@@ -50,7 +49,6 @@ public class UserDaoJDBCImpl implements UserDao {
         Statement statement = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.createStatement();
             statement.executeUpdate("DROP TABLE IF EXISTS users");
@@ -87,7 +85,6 @@ public class UserDaoJDBCImpl implements UserDao {
         PreparedStatement statement = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.prepareStatement("INSERT INTO users (id, name, lastName, age) VALUES (DEFAULT,  ?, ?, ?);");
             statement.setString(1, name);
@@ -126,10 +123,9 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM users WHERE id");
+            statement.executeUpdate("DELETE FROM users WHERE id = " + id);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +161,6 @@ public class UserDaoJDBCImpl implements UserDao {
         ResultSet res = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.createStatement();
             res = statement.executeQuery("SELECT * FROM users");
@@ -217,7 +212,6 @@ public class UserDaoJDBCImpl implements UserDao {
         Connection connection = null;
         try {
             connection = Util.getConnection();
-            connection.setAutoCommit(false);
             savepoint = connection.setSavepoint("SavepointOne");
             statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM users");
